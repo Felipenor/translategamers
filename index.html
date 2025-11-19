@@ -1,0 +1,858 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TranslateGamers • Traduza jogos em tempo real</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0e13;
+      color: #e8ecf1;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      background: rgba(10, 14, 19, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      z-index: 100;
+      transition: all 0.3s ease;
+    }
+
+    .nav.scrolled {
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+
+    .brand {
+      font-weight: 800;
+      font-size: 22px;
+      background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+      transition: transform 0.3s ease;
+    }
+
+    .brand:hover {
+      transform: scale(1.05);
+    }
+
+    .nav__link {
+      color: #94a3b8;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      font-size: 15px;
+    }
+
+    .nav__link:hover {
+      color: #3b82f6;
+    }
+
+    .hero {
+      padding: 120px 0 100px;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.06) 0%, transparent 50%),
+        #0a0e13;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      filter: blur(60px);
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, transparent 70%);
+      border-radius: 50%;
+      filter: blur(60px);
+      animation: float 10s ease-in-out infinite reverse;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(30px, 30px); }
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .hero__badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #60a5fa;
+      margin-bottom: 24px;
+      animation: slideDown 0.6s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero h1 {
+      font-size: 64px;
+      line-height: 1.1;
+      margin: 0 0 24px;
+      font-weight: 800;
+      letter-spacing: -2px;
+      background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: slideUp 0.8s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero__subtitle {
+      font-size: 20px;
+      color: #94a3b8;
+      max-width: 720px;
+      margin: 0 auto 40px;
+      line-height: 1.6;
+      animation: slideUp 0.8s ease 0.2s both;
+    }
+
+    .cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      animation: slideUp 0.8s ease 0.4s both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 32px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      transform: translate(-50%, -50%);
+      transition: width 0.5s, height 0.5s;
+    }
+
+    .btn:hover::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    .btn span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn--primary {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: #ffffff;
+      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+    }
+
+    .btn--primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+    }
+
+    .btn--secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.1);
+      color: #e8ecf1;
+    }
+
+    .btn--secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .btn--outline {
+      background: transparent;
+      border-color: rgba(59, 130, 246, 0.4);
+      color: #3b82f6;
+    }
+
+    .btn--outline:hover {
+      background: rgba(59, 130, 246, 0.1);
+      border-color: #3b82f6;
+    }
+
+    .section {
+      padding: 100px 0;
+      position: relative;
+    }
+
+    .section__header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .section__title {
+      font-size: 48px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+      background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .section__subtitle {
+      font-size: 18px;
+      color: #64748b;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .features {
+      background: linear-gradient(180deg, #0a0e13 0%, #0d1117 100%);
+    }
+
+    .features__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      padding: 32px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .feature-card:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(59, 130, 246, 0.3);
+      transform: translateY(-4px);
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+
+    .feature-card__icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(6, 182, 212, 0.2) 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .feature-card__title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #e8ecf1;
+    }
+
+    .feature-card__desc {
+      color: #94a3b8;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .how {
+      background: #0a0e13;
+    }
+
+    .steps {
+      max-width: 800px;
+      margin: 0 auto;
+      counter-reset: step;
+    }
+
+    .step {
+      position: relative;
+      padding: 32px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      margin-bottom: 20px;
+      padding-left: 100px;
+      transition: all 0.3s ease;
+    }
+
+    .step:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(59, 130, 246, 0.3);
+      transform: translateX(8px);
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 32px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .step__text {
+      font-size: 16px;
+      color: #cbd5e1;
+      line-height: 1.6;
+    }
+
+    .cta-section {
+      background:
+        radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 70%),
+        #0d1117;
+      padding: 120px 0;
+    }
+
+    .cta-box {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 64px 48px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-box::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(135deg, #3b82f6, #06b6d4);
+      border-radius: 24px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
+    }
+
+    .cta-box:hover::before {
+      opacity: 0.1;
+    }
+
+    .cta-box__title {
+      font-size: 40px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+
+    .cta-box__text {
+      font-size: 18px;
+      color: #94a3b8;
+      margin-bottom: 32px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 48px;
+      max-width: 900px;
+      margin: 0 auto 80px;
+      text-align: center;
+    }
+
+    .stat {
+      opacity: 0;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .stat:nth-child(1) { animation-delay: 0.2s; }
+    .stat:nth-child(2) { animation-delay: 0.4s; }
+    .stat:nth-child(3) { animation-delay: 0.6s; }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+    }
+
+    .stat__number {
+      font-size: 48px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+    }
+
+    .stat__label {
+      font-size: 16px;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    .footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      background: #0a0e13;
+      padding: 48px 0;
+    }
+
+    .footer__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    .footer__text {
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .footer__links {
+      display: flex;
+      gap: 24px;
+    }
+
+    .footer__link {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .footer__link:hover {
+      color: #3b82f6;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(10px); }
+    }
+
+    .scroll-indicator svg {
+      width: 24px;
+      height: 24px;
+      opacity: 0.5;
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        padding: 80px 0 60px;
+      }
+
+      .hero h1 {
+        font-size: 40px;
+        letter-spacing: -1px;
+      }
+
+      .hero__subtitle {
+        font-size: 18px;
+      }
+
+      .section__title {
+        font-size: 36px;
+      }
+
+      .section {
+        padding: 60px 0;
+      }
+
+      .features__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .step {
+        padding-left: 24px;
+        padding-top: 72px;
+      }
+
+      .step::before {
+        left: 50%;
+        top: 24px;
+        transform: translateX(-50%);
+      }
+
+      .cta-box {
+        padding: 48px 24px;
+      }
+
+      .cta-box__title {
+        font-size: 32px;
+      }
+
+      .footer__inner {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .btn {
+        padding: 14px 24px;
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav" id="navbar">
+    <div class="container nav__inner">
+      <div class="brand">TranslateGamers</div>
+      <a class="nav__link" href="https://youtube.com/@Felipenor" target="_blank" rel="noopener">YouTube</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero__content">
+      <div class="hero__badge">
+        <span>🎮</span>
+        <span>Traduza jogos em tempo real</span>
+      </div>
+      <h1>Jogue qualquer jogo<br>no seu idioma</h1>
+      <p class="hero__subtitle">
+        A ferramenta definitiva para traduzir textos e telas de jogos com OCR avançado,
+        interface intuitiva e suporte multilíngue. Grátis e open source.
+      </p>
+      <div class="cta">
+        <a class="btn btn--primary" href="https://github.com/Felipenor/TranslateGamers/" target="_blank" rel="noopener">
+          <span>⬇️ Baixar Grátis</span>
+        </a>
+        <a class="btn btn--secondary" href="https://github.com/Felipenor/TranslateGamers" target="_blank" rel="noopener">
+          <span>Ver no GitHub</span>
+        </a>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M19 12l-7 7-7-7"/>
+      </svg>
+    </div>
+  </section>
+
+  <section class="section features">
+    <div class="container">
+      <div class="stats">
+        <div class="stat">
+          <div class="stat__number">100%</div>
+          <div class="stat__label">Gratuito</div>
+        </div>
+        <div class="stat">
+          <div class="stat__number">Multi</div>
+          <div class="stat__label">Idiomas</div>
+        </div>
+        <div class="stat">
+          <div class="stat__number">OCR</div>
+          <div class="stat__label">Inteligente</div>
+        </div>
+      </div>
+
+      <div class="section__header">
+        <h2 class="section__title">Recursos Poderosos</h2>
+        <p class="section__subtitle">Tudo que você precisa para traduzir seus jogos favoritos</p>
+      </div>
+      <div class="features__grid">
+        <div class="feature-card">
+          <div class="feature-card__icon">🔄</div>
+          <h3 class="feature-card__title">Tradução Automática</h3>
+          <p class="feature-card__desc">
+            Digite ou cole qualquer texto e receba traduções instantâneas com detecção automática do idioma de origem.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card__icon">📋</div>
+          <h3 class="feature-card__title">Monitoramento de Clipboard</h3>
+          <p class="feature-card__desc">
+            Copie qualquer texto no jogo e veja a tradução aparecer automaticamente, sem precisar colar manualmente.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card__icon">👁️</div>
+          <h3 class="feature-card__title">OCR de Área Visual</h3>
+          <p class="feature-card__desc">
+            Selecione qualquer parte da tela para extrair e traduzir texto usando reconhecimento óptico avançado.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card__icon">🎨</div>
+          <h3 class="feature-card__title">Temas Personalizáveis</h3>
+          <p class="feature-card__desc">
+            Escolha entre Claro, Escuro, Ocean, Forest ou crie seu próprio tema personalizado com cores favoritas.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card__icon">📝</div>
+          <h3 class="feature-card__title">Fontes Customizadas</h3>
+          <p class="feature-card__desc">
+            Configure fontes, tamanhos e estilos de texto. Inclui opções divertidas como Jokerman e muito mais.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card__icon">🌍</div>
+          <h3 class="feature-card__title">Interface Multilíngue</h3>
+          <p class="feature-card__desc">
+            Interface disponível em múltiplos idiomas com atualização em tempo real, sem necessidade de reiniciar.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card__icon">💾</div>
+          <h3 class="feature-card__title">Histórico Completo</h3>
+          <p class="feature-card__desc">
+            Acesse todas as suas traduções anteriores com visualização ampliada e busca rápida no histórico.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-card__icon">🎯</div>
+          <h3 class="feature-card__title">Botão Flutuante</h3>
+          <p class="feature-card__desc">
+            Minimize a janela e use o botão flutuante para restaurar rapidamente durante suas sessões de jogo.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section how">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title">Como Usar</h2>
+        <p class="section__subtitle">Comece a traduzir em menos de 2 minutos</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <p class="step__text">
+            Clique no botão "Baixar Grátis" e faça o download da última versão do TranslateGamers no GitHub.
+          </p>
+        </div>
+        <div class="step">
+          <p class="step__text">
+            Abra o arquivo executável no Windows. Não é necessário instalação complexa.
+          </p>
+        </div>
+        <div class="step">
+          <p class="step__text">
+            Na primeira execução, escolha o idioma da interface e configure seu idioma de destino preferido.
+          </p>
+        </div>
+        <div class="step">
+          <p class="step__text">
+            Digite texto manualmente ou use a função OCR para capturar texto diretamente da tela do jogo.
+          </p>
+        </div>
+        <div class="step">
+          <p class="step__text">
+            Clique em "Traduzir" ou ative a opção "Traduzir enquanto digita" para traduções automáticas instantâneas.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-box">
+        <h2 class="cta-box__title">Pronto para começar?</h2>
+        <p class="cta-box__text">
+          Baixe gratuitamente e comece a jogar seus games favoritos no seu idioma hoje mesmo.
+        </p>
+        <div class="cta">
+          <a class="btn btn--primary" href="https://github.com/Felipenor/TranslateGamers/" target="_blank" rel="noopener">
+            <span>⬇️ Baixar Agora</span>
+          </a>
+          <a class="btn btn--outline" href="https://www.paypal.com/donate?business=felipeczs41@gmail.com&currency_code=BRL" target="_blank" rel="noopener">
+            <span>💝 Apoiar via PayPal</span>
+          </a>
+          <a class="btn btn--outline" href="https://livepix.gg/felipenor" target="_blank" rel="noopener">
+            <span>💚 Apoiar via Pix</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__text">
+        © <span id="year"></span> TranslateGamers • Desenvolvido por
+        <a class="footer__link" href="https://linkr.bio/felipenor" target="_blank" rel="noopener">Felipenor</a>
+      </div>
+      <div class="footer__links">
+        <a class="footer__link" href="https://youtube.com/@Felipenor" target="_blank" rel="noopener">YouTube</a>
+        <a class="footer__link" href="https://github.com/Felipenor/TranslateGamers" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const navbar = document.getElementById('navbar');
+    let lastScroll = 0;
+
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+
+      if (currentScroll > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+
+      lastScroll = currentScroll;
+    });
+
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.feature-card, .step').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>

